@@ -1,0 +1,30 @@
+name: Main Branch Push Notification
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Git
+        uses: actions/checkout@v2
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "Abdulqadir579"
+          git config --global user.email "abdulqadirk1998@gmail.com"
+
+      - name: Send email notification
+        uses: qadir/action-send-mail@v2
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: Code pushed to main branch
+          body: Code has been pushed to the main branch of the repository.
+
